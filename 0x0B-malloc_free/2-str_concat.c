@@ -19,6 +19,7 @@ char *str_concat(char *s1, char *s2)
 	if (s2 == NULL)
 		s2 = "";
 
+	m = n = 0;
 	while (s1[size6] != '\0')
 		size6++;
 	while (s1[size8] != '\0')
