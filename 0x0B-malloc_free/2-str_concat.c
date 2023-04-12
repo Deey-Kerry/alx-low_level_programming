@@ -10,7 +10,7 @@
 char *str_concat(char *s1, char *s2)
 {
 	char *bstr;
-	unsigned int size6 = 0, size8 = 0;
+	unsigned int size1 = 0, size2 = 0;
 	unsigned int m = 0, n = 0;
 	unsigned int area;
 
@@ -20,17 +20,17 @@ char *str_concat(char *s1, char *s2)
 		s2 = "";
 
 	m = n = 0;
-	while (s1[size6] != '\0')
-		size6++;
-	while (s1[size8] != '\0')
-		size8++;
+	while (s1[size1] != '\0')
+		size1++;
+	while (s1[size2] != '\0')
+		size2++;
 
-	area = size6 + size8;
+	area = size1 + size2;
 
 	bstr = malloc((sizeof(char) * area) + 1);
 	if (bstr == NULL)
 		return (NULL);
-	while (m < size6)
+	while (m < size1)
 	{
 		bstr[m] = s1[m];
 		m++;
