@@ -35,11 +35,13 @@ char *str_concat(char *s1, char *s2)
 		bstr[m] = s1[m];
 		m++;
 	}
-	while (m <= area)
+	while (n < size2)
 	{
 		bstr[m] = s2[n];
 		m++;
 		n++;
 	}
+	bstr[m] = '\0';
+
 	return (bstr);
 }
