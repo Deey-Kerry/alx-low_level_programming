@@ -1,98 +1,70 @@
 #include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 /**
- * strtow - function that splits a string into words
- * @str: string input
- * Return: split string
+ * count_words - counts words in a string
+ * @s: string input
+ * Return: words counted
+ */
+int count_words(char *s)
+{
+	int a = 0, b = 0, flag = 0;
+
+	while (s[a] != '\0')
+	{
+		if (s[a] == ' ')
+			flag = 0;
+		else if (flag == 0)
+		{
+			flag = 1;
+			b++;
+		}
+		a++;
+	}
+
+	return (b);
+}
+/**
+ * strtow - divide string
+ * @str: string given
+ * Return: divided string
  */
 char **strtow(char *str)
 {
-	char **words;
-	int number, base, z;
+	char *tmp, **grid;
+	int x = 0, y = 0, base = 0, letters, a = 0, begin, stop;
 
-	if (str == NULL || str[0] == '\0' || (str[0] == ' ' && str[1] == '\0'))
-	{
+	do {
+		base++;
+	} while (*(str + base));
+	letters = count_words(str);
+	if (letters == 0)
 		return (NULL);
-	}
-
-	z = base = number = 0;
-	while (str[z])
+	grid = malloc(sizeof(char *) * (letters + 1));
+	if (grid == NULL)
+		return (NULL);
+	while (x <= base)
 	{
-		if (number == 0 && str[z] != ' ')
-			number = 1;
-		if (z > 0 && str[z] == ' ' && str[z - 1] != ' ')
+		if (str[x] == ' ' || str[x] == '\0')
 		{
-			number = 0;
-			base++;
+			if (a)
+			{
+				stop = x;
+				tmp = malloc(sizeof(char) * (a + 1));
+				if (tmp == NULL)
+					return (NULL);
+				while (begin < stop)
+					*tmp++ = str[begin++];
+				*tmp = '\0';
+				grid[y] = tmp - a;
+				y++;
+				a = 0;
+			}
 		}
-		z++;
+		else if (a++ == 0)
+			begin = x;
+		x++;
 	}
-
-	base += number == 1 ? 1 : 0;
-	if (base == 0)
-	{
-		return (NULL);
-	}
-	words = (char **)malloc(sizeof(char *) * (base + 1));
-	if (words == NULL)
-	{
-		return (NULL);
-	}
-	util(words, str);
-	words[len] = NULL;
-	return (words);
-}
-/**
-* util - fetching words
-* @words: array of characters
-* @str: string
-* Return: words
-*/
-void util(char **words, char *str)
-{
-	int m, n, kicka, number;
-
-	m = n = number = 0;
-	while (str[m])
-	{
-		if (number == 0 && str[m] != ' ')
-		{
-			number = 1;
-			kicka = m;
-		}
-
-		if (m > 0 && str[m] == ' ' && str[m - 1] != ' ')
-		{
-			create_word(words, str, kicka, m, n);
-        		n++;
-        		number = 0;
-     		}
-	m++;
-	}
-
-	if (number == 1)
-		create_word(words, str, kicka, m, n);
-}
-/**
-* create_word - creates a word and inserts it
-* @words: array of characters
-* @str: string
-* @start: starting index of a word
-* @end: stopping index of word
-* @index: the position
-*/
-void create_word(char **words, char *str, int start, int end, int index)
-{
-	int a, b;
-
-  	a = end - start;
-  	words[index] = (char *)malloc(sizeof(char) * (a + 1));
-
-	for (b = 0; start < end; start++, b++)
-	{
-		words[index][b] = str[start];
-	}
-
-	words[index][b] = '\0';
+	grid[y] = NULL;
+	return (grid);
 }
