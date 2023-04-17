@@ -19,7 +19,7 @@ struct dog
 typedef struct dog dog_ck;
 void init_dog(struct dog *g, char *name, float age, char *owner);
 void print_dog(struct dog *g);
-dog_ck *mix_dog(char *name, float age, char *owner);
+dog_ck *new_dog(char *name, float age, char *owner);
 void free_dog(dog_ck *g);
 #endif
 
