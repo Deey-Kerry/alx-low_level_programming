@@ -8,40 +8,35 @@
  * @argv: array of arguements in a one dimensional array
  * Return: function
  */
-int main(int argc, char *argv[])
+int main(int __attribute__((__unused__)) argc, char *argv[])
 {
-        char b;
-        int kd1, kd2, output;
-        int (*func)(int, int);
+	char *op;
+	int len1, len2;
 
-        if (argc != 4)
-        {
-                printf("Error\n");
-                return (98);
-        }
+	if (argc != 4)
+	{
+		printf("Error\n");
+		exit(98);
+	}
 
-        kd1 = atoi(argv[1]);
-        kd2 = atoi(argv[3]);
+	len1 = atoi(argv[1]);
+	op = argv[2];
+	len2 = atoi(argv[3]);
 
-        func = get_op_func(argv[2]);
+	if (get_op_func(op) == NULL || op[1] != '\0')
+	{
+		printf("Error\n");
+		exit(99);
+	}
 
-        if (!func)
-        {
-                printf("Error\n");
-                exit(99);
-        }
+	if ((*op == '/' && len2 == 0) ||
+			(*op == '%' && len2 == 0))
+	{
+		printf("Error\n");
+		exit(100);
+	}
 
-        b = *argv[2];
+	printf("%d\n", get_op_func(op)(len1, len2));
 
-        if ((b == '/' || b == '%') && kd2 == 0)
-        {
-                printf("Error\n");
-                exit(100);
-        }
-
-        output = func(kd1, kd2);
-
-        printf("%d\n", output);
-
-        return (0);
+	return (0);
 }
