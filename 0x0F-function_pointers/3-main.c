@@ -1,6 +1,7 @@
 #include "3-calc.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "function_pointers.h"
 /**
  * main - beginning of a function
  * @argc: number of arguements in a function
