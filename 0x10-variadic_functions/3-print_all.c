@@ -9,43 +9,42 @@
  */
 void print_all(const char * const format, ...)
 {
-	char *str;
-	unsigned int p = 0, q = 0, r = 0;
+	char *chr, *kdn = "";
+	int z = 0;
+
 	va_list vari;
-	const char k_fomat[] = "cifs";
 
 	va_start(vari, format);
-	while (format && format[p])
-	{
-		q = 0;
-		while (k_fomat[q])
-		{
-			if (format[p] == k_fomat[q] && r)
-			{
-				printf(", ");
-				break;
-			}
-			q++;
-		}
-		switch (format[p])
-		{
-			case 'c':
-				printf("%c", va_arg(vari, int)), r = 1;
-				break;
-			case 'i':
-				printf("%d", va_arg(vari, int)), r = 1;
-				break;
-			case 'f':
-				printf("%f", va_arg(vari, double)), r = 1;
-				break;
-			case 's':
-				str = va_arg(vari, char *), r = 1;
-				if (!str)
-					printf("(nil)");
 
-				printf("%s", str);
-				break;
-		} p++;
+	if (format)
+	{
+		z = 0;
+		while (format[z])
+		{
+			switch (format[z])
+			{
+				case 'c':
+					printf("%s%c", kdn, va_arg(vari, int));
+					break;
+				case 'i':
+					printf("%s%d", kdn, va_arg(vari, int));
+					break;
+				case 'f':
+					printf("%s%f", kdn, va_arg(vari, double));
+					break;
+				case 's':
+					chr = va_arg(vari, char *);
+					if (!chr)
+						chr = "(nil)";
+					printf("%s%s", kdn, chr);
+					break;
+				default:
+					z++;
+					continue;
+			}
+			kdn = ", ";
+			z++;
+		}
 	}
 	printf("\n"), va_end(vari);
 }
