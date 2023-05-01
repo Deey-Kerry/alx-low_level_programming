@@ -1,5 +1,6 @@
 #ifndef LISTS_H
 #define LISTS_H
+#include <stddef.h>
 
 /** struct */
 
@@ -22,7 +23,6 @@ typedef struct listint_s
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <stddef.h>
 
 /** prototypes */
 int _putchar(char c);
