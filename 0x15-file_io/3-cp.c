@@ -3,7 +3,7 @@
 #include "main.h"
 
 char *create_memory(char *file);
-void close_file(int k);
+void close_file(int fd);
 
 /**
  * create_memory - function that allocates space in memory
@@ -28,17 +28,17 @@ char *create_memory(char *file)
 
 /**
  * close_file - a function that close the file
- * @k: file
+ * @fd: file
  */
-void close_file(int k)
+void close_file(int fd)
 {
 	int z;
 
-	z = close(k);
+	z = close(fd);
 
 	if (z == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close k %d\n", k);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
 		exit(100);
 	}
 }
@@ -51,7 +51,7 @@ void close_file(int k)
  */
 int main(int argc, char *argv[])
 {
-	int begin, end, r, w;
+	int from, to, r, w;
 	char *memory;
 
 	if (argc != 3)
@@ -61,12 +61,12 @@ int main(int argc, char *argv[])
 	}
 
 	memory = create_memory(argv[2]);
-	begin = open(argv[1], O_RDONLY);
-	r = read(begin, memory, 1024);
-	end = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	from = open(argv[1], O_RDONLY);
+	r = read(from, memory, 1024);
+	to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 
 	do {
-		if (begin == -1 || r == -1)
+		if (from == -1 || r == -1)
 		{
 			dprintf(STDERR_FILENO,
 					"Error: Can't read from file %s\n", argv[1]);
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 		}
 
 		w = write(end, memory, r);
-		if (end == -1 || w == -1)
+		if (to == -1 || w == -1)
 		{
 			dprintf(STDERR_FILENO,
 					"Error: Can't write to %s\n", argv[2]);
@@ -84,13 +84,13 @@ int main(int argc, char *argv[])
 		}
 
 		r = read(begin, memory, 1024);
-		end = open(argv[2], O_WRONLY | O_APPEND);
+		to = open(argv[2], O_WRONLY | O_APPEND);
 
 	} while (r > 0);
 
 	free(memory);
-	close_file(begin);
-	close_file(end);
+	close_file(from);
+	close_file(to);
 
 	return (0);
 }
