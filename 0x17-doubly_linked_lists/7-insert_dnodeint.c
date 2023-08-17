@@ -9,10 +9,9 @@
  */
 dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	dlistint_t *new_node;
-	dlistint_t *head;
+	dlistint_t *new_node, *head;
 	unsigned int a;
-	
+
 	new_node = NULL;
 	if (idx == 0)
 		new_node = add_dnodeint(h, n);
@@ -48,4 +47,4 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 		}
 	}
 	return (new_node);
-}	
+}
